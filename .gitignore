@@ -1,0 +1,10 @@
+Bookshelf.Api/obj/
+Bookshelf.Api/bin/
+Bookshelf.Domain/obj/
+Bookshelf.Domain/bin/
+Bookshelf.Application/obj/
+Bookshelf.Application/bin/
+Bookshelf.Application.Tests/obj/
+Bookshelf.Application.Tests/bin/
+Bookshelf.Infrastructure/obj/
+Bookshelf.Infrastructure/bin/
