@@ -8,3 +8,5 @@ Bookshelf.Application.Tests/obj/
 Bookshelf.Application.Tests/bin/
 Bookshelf.Infrastructure/obj/
 Bookshelf.Infrastructure/bin/
+Bookshelf.Infrastructure.Migrations/obj/
+Bookshelf.Infrastructure.Migrations/bin/
