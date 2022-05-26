@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Bookshelf.Infrastructure.Persistence
 {
@@ -12,11 +8,22 @@ namespace Bookshelf.Infrastructure.Persistence
     {
         public BookshelfDbContext CreateDbContext(string[] args)
         {
-            
-            var connectionString = "server=localhost;port=3306;database=bookshelf;uid=root;password=my-secret-pw";
+            // TODO: Add environment base config
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = config.GetConnectionString("BookshelfDb");
 
             var optionsBuilder = new DbContextOptionsBuilder<BookshelfDbContext>();
-            optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 27)), b => b.MigrationsAssembly("Bookshelf.Infrastructure.Migrations"));
+            optionsBuilder.UseMySql(
+                connectionString, 
+                new MySqlServerVersion(new Version(8, 0, 29)), 
+                b => 
+                { 
+                    b.MigrationsAssembly("Bookshelf.Infrastructure.Migrations"); 
+                    b.EnableRetryOnFailure(3);
+                });
 
             return new BookshelfDbContext(optionsBuilder.Options);
         }
