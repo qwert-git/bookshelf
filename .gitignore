@@ -10,3 +10,5 @@ Bookshelf.Infrastructure/obj/
 Bookshelf.Infrastructure/bin/
 Bookshelf.Infrastructure.Migrations/obj/
 Bookshelf.Infrastructure.Migrations/bin/
+Bookshelf.Infrastructure.Tests/obj/
+Bookshelf.Infrastructure.Tests/bin/
