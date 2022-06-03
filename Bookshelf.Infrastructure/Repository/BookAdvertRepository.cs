@@ -11,20 +11,27 @@ internal class BookAdvertRepository : IBookAdvertReader
     private readonly BookshelfDbContext _dbContext;
     private readonly IMapper _mapper;
 
-    public BookAdvertRepository(BookshelfDbContext dbContext)
+    public BookAdvertRepository(BookshelfDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
 
-    public async Task<BookAdvert> Get(int id)
+    public async Task<BookAdvert> GetAsync(int id)
     {
-        var entity = await _dbContext.BookAdverts.FindAsync(id);
+        var entity = await _dbContext.BookAdverts
+            .Include(b => b.PhotoLinks)
+            .FirstOrDefaultAsync(b => b.Id == id);
+
         return _mapper.Map<BookAdvert>(entity);
     }
 
     public async Task<ICollection<BookAdvert>> GetAllAsync()
     {
-        var allAdvertEntities = await _dbContext.BookAdverts.ToListAsync();
+        var allAdvertEntities = await _dbContext.BookAdverts
+            .Include(b => b.PhotoLinks)
+            .ToListAsync();
+
         return _mapper.Map<ICollection<BookAdvert>>(allAdvertEntities);
     }
 }

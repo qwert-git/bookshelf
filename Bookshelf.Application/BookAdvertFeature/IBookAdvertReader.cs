@@ -4,7 +4,7 @@ namespace Bookshelf.Application.BookAdvertFeature;
 
 public interface IBookAdvertReader
 {
-    Task<BookAdvert> Get(int id);
+    Task<BookAdvert> GetAsync(int id);
 
     Task<ICollection<BookAdvert>> GetAllAsync();
 }
