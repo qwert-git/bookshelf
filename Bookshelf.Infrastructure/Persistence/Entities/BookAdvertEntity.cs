@@ -15,7 +15,7 @@ internal class BookAdvertEntity
     [Required]
     public string Description { get; set; } = string.Empty;
 
-    public ICollection<PhotoLinkEntity> PhotoLinks { get; set; } = Array.Empty<PhotoLinkEntity>();
+    public ICollection<PhotoLinkEntity> PhotoLinks { get; set; }
 
     public int Status { get; set; }
 }
