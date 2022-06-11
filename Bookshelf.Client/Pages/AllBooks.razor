@@ -1,0 +1,63 @@
+@page "/books"
+@inject HttpClient http
+
+<PageTitle>Всі книжки</PageTitle>
+
+<h1>Всі книжки</h1>
+<p>Тут можна подивитись всі оголошення про обмін.</p>
+
+<div>
+    @if (isRequestFailed)
+    {
+        <p>Виникла помилка при зверенні до сервера. Спробуйте пізніше.</p>
+    }
+    else
+    {
+        if (bookAdverts is null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (var item in bookAdverts)
+                {
+                    <li>
+                        <p>@item.Title</p>
+                        <p>@item.Description</p>
+                        <p>@item.Status</p>
+                    </li>
+                }
+            </ul>
+        }
+    }
+</div>
+
+@code {
+    private BookAdvert[]? bookAdverts;
+    private bool isRequestFailed = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            bookAdverts = await http.GetFromJsonAsync<BookAdvert[]>("/bookadvert");
+        }
+        catch (Exception ex)
+        {
+            isRequestFailed = true;
+            Console.WriteLine($"Error while reading the booksL {ex.Message}");
+        }
+    }
+
+    public class BookAdvert
+    {
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public int Status { get; set; }
+
+        public ICollection<string> PhotoLinks { get; set; }
+    }
+}
