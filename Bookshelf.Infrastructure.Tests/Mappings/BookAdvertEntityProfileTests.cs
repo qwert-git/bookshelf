@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoFixture;
 using AutoFixture.Xunit2;
@@ -107,5 +108,18 @@ public class BookAdvertEntityProfileTests
         // Assert
         bookAdvert.PhotoLinks.Should()
             .ContainInOrder(entity.PhotoLinks.Select(p => p.Link));
+    }
+
+    [Fact]
+    internal void MapNullEnumerable_Should_ReturnEmptyCollection()
+    {
+        // Act
+        var bookAdvert = _mapper.Map<ICollection<BookAdvert>>(null as IEnumerable<BookAdvert>);
+
+        // Assert
+        bookAdvert.Should()
+        .BeEmpty()
+            .And
+        .HaveCount(0);
     }
 }
